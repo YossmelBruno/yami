@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi futura maestra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Parisienne&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black: #0a0710;
+    --black-deep: #050308;
+    --burgundy: #2b0f22;
+    --rose: #ff4f9a;
+    --rose-deep: #d61f74;
+    --rose-soft: #ffd3e6;
+    --ivory: #f6ecf1;
+    --gold: #d8a960;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background: var(--black);
+    color: var(--ivory);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+
+  ::selection{ background: var(--rose); color:#fff; }
+
+  /* -------------------- FLOATING PETALS -------------------- */
+  #petal-layer{
+    position: fixed;
+    inset:0;
+    pointer-events:none;
+    z-index: 5;
+    overflow:hidden;
+  }
+  .petal{
+    position:absolute;
+    top:-40px;
+    width:16px;
+    height:16px;
+    background: radial-gradient(circle at 30% 30%, var(--rose-soft), var(--rose) 70%);
+    border-radius: 60% 40% 60% 40% / 60% 60% 40% 40%;
+    opacity:0.85;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 0 3px rgba(255,79,154,0.5));
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-5vh) translateX(0) rotate(0deg); }
+    100%{ transform: translateY(105vh) translateX(var(--drift,40px)) rotate(360deg); }
+  }
+
+  /* -------------------- HERO -------------------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding: 40px 20px 120px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(214,31,116,0.18), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(43,15,34,0.9), var(--black) 70%);
+  }
+
+  .eyebrow{
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--gold);
+    margin-bottom: 22px;
+    opacity:0;
+    animation: riseIn 1.4s ease forwards 0.3s;
+  }
+
+  .hero h1{
+    font-family:'Parisienne', cursive;
+    font-size: clamp(2.6rem, 8vw, 5.6rem);
+    color: var(--rose);
+    margin: 0 0 10px;
+    text-shadow: 0 0 30px rgba(255,79,154,0.35);
+    opacity:0;
+    animation: riseIn 1.6s ease forwards 0.6s;
+  }
+
+  .hero h2{
+    font-family:'Playfair Display', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: var(--rose-soft);
+    max-width:640px;
+    margin: 0 auto 40px;
+    opacity:0;
+    animation: riseIn 1.6s ease forwards 1s;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform: translateY(24px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .scroll-hint{
+    position:absolute;
+    bottom:36px;
+    font-size:0.8rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color: var(--rose-soft);
+    opacity:0.6;
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+  /* -------------------- TULIP FIELD (hero decoration) -------------------- */
+  .field{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height: 220px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap: -10px;
+    pointer-events:none;
+  }
+  .field svg{
+    height: 100%;
+    width: auto;
+    flex-shrink:0;
+    margin: 0 -14px;
+    animation: sway 5s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  .field svg:nth-child(2n){ animation-duration: 6s; }
+  .field svg:nth-child(3n){ animation-duration: 4.2s; animation-delay: -1s; }
+  @keyframes sway{
+    0%,100%{ transform: rotate(-2.5deg); }
+    50%{ transform: rotate(2.5deg); }
+  }
+
+  /* -------------------- SECTIONS -------------------- */
+  section{
+    position:relative;
+    z-index:2;
+    padding: 110px 20px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin: 0 auto 50px;
+    color: var(--gold);
+    opacity:0.8;
+  }
+  .divider::before, .divider::after{
+    content:'';
+    height:1px;
+    width:60px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .letter-title{
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    font-weight:600;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    text-align:center;
+    color: var(--rose-soft);
+    margin-bottom: 34px;
+  }
+
+  .letter-body p{
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height: 1.9;
+    text-align:center;
+    color: #ecdce4;
+    margin: 0 auto 24px;
+    max-width: 620px;
+  }
+  .letter-body p em{ color: var(--rose); font-style: italic; }
+
+  /* -------------------- GARDEN (the game) -------------------- */
+  .garden-intro{
+    text-align:center;
+    margin-bottom: 20px;
+  }
+  .garden-intro p{
+    font-size: 1.2rem;
+    color: var(--rose-soft);
+    font-style: italic;
+    opacity:0.85;
+  }
+
+  .garden{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap: 6px;
+    margin: 50px auto 10px;
+    max-width: 900px;
+    padding: 40px 20px 10px;
+    position:relative;
+  }
+
+  .garden::before{
+    content:'';
+    position:absolute;
+    left:5%; right:5%; bottom:0;
+    height:2px;
+    background: linear-gradient(90deg, transparent, rgba(216,169,96,0.5), transparent);
+  }
+
+  .tulip-slot{
+    width: 100px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor: pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tulip-slot svg{
+    width: 78px;
+    height: auto;
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1), filter 0.5s ease;
+    transform: scale(0.82) translateY(6px);
+    filter: saturate(0.55) brightness(0.72);
+  }
+
+  .tulip-slot:hover svg{
+    transform: scale(0.92) translateY(0px);
+    filter: saturate(0.85) brightness(0.9);
+  }
+
+  .tulip-slot.bloomed svg{
+    transform: scale(1.08) translateY(-6px);
+    filter: saturate(1.15) brightness(1.05) drop-shadow(0 0 14px rgba(255,79,154,0.55));
+    animation: bloomPop 0.6s ease;
+  }
+  @keyframes bloomPop{
+    0%{ transform: scale(0.82) translateY(6px) rotate(0deg); }
+    45%{ transform: scale(1.22) translateY(-10px) rotate(-6deg); }
+    100%{ transform: scale(1.08) translateY(-6px) rotate(0deg); }
+  }
+
+  .tulip-num{
+    margin-top: 6px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    opacity: 0.55;
+  }
+  .tulip-slot.bloomed .tulip-num{ opacity:0; }
+
+  .garden-counter{
+    text-align:center;
+    margin: 22px 0 0;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    color: var(--rose);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* message card revealed */
+  #message-stage{
+    min-height: 150px;
+    max-width: 600px;
+    margin: 34px auto 0;
+    text-align:center;
+    position:relative;
+  }
+  .message-card{
+    background: linear-gradient(160deg, rgba(43,15,34,0.9), rgba(10,7,16,0.95));
+    border: 1px solid rgba(255,79,154,0.35);
+    border-radius: 18px;
+    padding: 30px 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255,79,154,0.08);
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-style: italic;
+    color: var(--rose-soft);
+    opacity:0;
+    transform: translateY(14px);
+    animation: cardIn 0.7s ease forwards;
+  }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+
+  .message-placeholder{
+    color: rgba(246,236,241,0.35);
+    font-style: italic;
+    font-size: 1.05rem;
+    padding-top: 40px;
+  }
+
+  /* final reveal */
+  #final-reveal{
+    max-width: 640px;
+    margin: 60px auto 0;
+    text-align:center;
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition: opacity 1.2s ease, max-height 1.2s ease;
+  }
+  #final-reveal.show{
+    opacity:1;
+    max-height: 900px;
+  }
+  #final-reveal .frame{
+    border: 1px solid rgba(216,169,96,0.4);
+    border-radius: 22px;
+    padding: 42px 32px;
+    background: radial-gradient(ellipse at top, rgba(255,79,154,0.12), transparent 60%);
+  }
+  #final-reveal h3{
+    font-family:'Parisienne', cursive;
+    font-size: 2.1rem;
+    color: var(--rose);
+    margin: 0 0 18px;
+  }
+  #final-reveal p{ font-size:1.2rem; line-height:1.85; color:#ecdce4; }
+  #final-reveal .signature{
+    margin-top: 22px;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* -------------------- MEDIA SECTIONS -------------------- */
+  .media-title{
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    color: var(--rose-soft);
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  .video-side{
+    position: fixed;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    z-index: 6;
+    max-height: 78vh;
+    overflow-y: auto;
+    padding: 4px;
+    scrollbar-width: none;
+  }
+  .video-side::-webkit-scrollbar{ display:none; }
+
+  .video-frame{
+    flex: 0 0 auto;
+    width: 92px;
+    aspect-ratio: 3/4;
+    border-radius: 14px;
+    overflow:hidden;
+    border: 1px solid rgba(255,79,154,0.35);
+    background: linear-gradient(160deg, rgba(43,15,34,0.85), rgba(5,3,8,0.95));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+  }
+  .video-frame video{
+    width:100%; height:100%; object-fit:cover;
+  }
+  .video-frame .empty-note{
+    font-size:0.62rem;
+    color: rgba(246,236,241,0.4);
+    text-align:center;
+    padding: 6px;
+    font-style: italic;
+    line-height:1.3;
+  }
+
+  audio{ display:none; }
+
+  /* -------------------- FOOTER -------------------- */
+  footer{
+    text-align:center;
+    padding: 70px 20px 60px;
+    color: rgba(246,236,241,0.4);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+  footer .heart{ color: var(--rose); }
+
+  @media (max-width:520px){
+    .tulip-slot{ width: 72px; }
+    .garden{ gap: 2px; }
+    .video-side{
+      top: auto;
+      bottom: 14px;
+      right: 10px;
+      transform: none;
+      flex-direction: row;
+      max-height: none;
+      max-width: 78vw;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+    .video-side .video-frame{ width: 60px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="petal-layer"></div>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="eyebrow">Feliz día a la mejor futura maestra</div>
+  <h1>Para mi futura maestra</h1>
+  <h2>Un jardín entero de tulipanes negros y rosas, sembrado solo para ti — para que veas lo que siento, aunque todavía no tenga el valor de decirlo con esas palabras exactas.</h2>
+  <div class="scroll-hint">desliza despacio ↓</div>
+  <div class="field" id="fieldWrap"></div>
+</div>
+
+<!-- ============ CARTA 1 ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="letter-title">Hoy, algo cambió</div>
+  <div class="letter-body">
+    <p>Hoy te mandé un ramo de flores. Y quiero que sepas algo: <em>nunca antes había regalado flores a nadie.</em> Nunca. No porque no quisiera, sino porque nunca había sentido que valiera tanto la pena hacerlo.</p>
+    <p>Hay personas a las que uno les regala cosas. Y hay personas para las que uno, por primera vez en la vida, aprende a regalar. Tú eres la primera. Por eso me tembló un poco la mano hoy, porque no sabía cómo caber en tan pocas palabras todo lo que realmente quería decirte.</p>
+    <p>Contigo fue distinto desde el día uno. Y hoy, que se celebra el día del maestro, quise celebrarte a ti — aunque recién estés empezando ese camino — porque ya sé, sin ninguna duda, que vas a ser la mejor maestra del mundo.</p>
+    <p>No sé si algún día te des cuenta de todo lo que provocas sin darte cuenta: que alguien que nunca había sentido esto, ahora no puede dejar de sentirlo. Que alguien que nunca había regalado una flor, hoy sembró un jardín entero solo para verte sonreír un segundo.</p>
+  </div>
+</section>
+
+<!-- ============ CARTA MELANCÓLICA ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="letter-title">Lo que no te digo cuando estamos juntos</div>
+  <div class="letter-body">
+    <p>Hay noches en las que pienso en ti más de lo que debería, y me pregunto cómo alguien puede volverse tan importante en tan poco tiempo. No tengo una respuesta clara. Solo sé que desde que llegaste, todo lo demás empezó a sonar un poco más lejano.</p>
+    <p>A veces me da miedo sentir tanto. Miedo de decir algo mal, de asustarte, de llegar demasiado rápido o demasiado lento. Pero entre todos esos miedos hay una certeza que no se mueve: contigo, aunque no lo diga en voz alta todos los días, siento que por fin encontré algo real.</p>
+    <p>Sé que no te he pedido que seas mi novia. Y sé que eso a veces puede doler, generar dudas, hacerte pensar cosas que no son ciertas. Pero no es indiferencia, ni falta de ganas. Es que quiero llegar a ese momento estando bien, cuidando mi salud, cuidándome a mí para poder cuidarte a ti como te mereces — sin promesas a medias, sin miedo escondido detrás de las palabras bonitas.</p>
+    <p>Y aun así, aunque falte esa palabra, lo que siento ya está aquí, completo, desde hace tiempo: <em>te amo</em>. Te amo en los días simples, en los mensajes de buenas noches, en cada vez que me llamas tu mono y yo sonrío como un tonto solo, en cada pequeño gesto que tú crees que no noto, pero que guardo.</p>
+    <p>Quiero que cuando leas esto, aunque sea por un segundo, se te haga un nudo en el pecho — no de tristeza, sino de esa clase de emoción que no cabe del todo en el cuerpo. Quiero que llores un poco, no porque algo esté mal, sino porque por fin alguien te está diciendo, sin filtros, cuánto le importas.</p>
+  </div>
+</section>
+
+<!-- ============ POEMA ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="letter-title">Un poema, para que te quedes un rato más aquí</div>
+  <div class="letter-body" style="font-style:italic;">
+    <p>
+      Sembré tulipanes negros donde antes no había nada,<br>
+      y entre el negro se coló un rosa que no pedí prestado.<br>
+      Así llegaste tú: sin avisar, sin golpear la puerta,<br>
+      y de pronto todo mi silencio tenía un color nuevo.
+    </p>
+    <p>
+      No sé si esto se llama amor o se llama otra cosa,<br>
+      solo sé que desde que estás, hasta lo simple pesa distinto.<br>
+      Tú, que apenas empiezas a enseñar, ya me enseñaste algo:<br>
+      que se puede tener miedo y aun así querer quedarse.
+    </p>
+    <p>
+      Todavía no te pido que seas mía frente al mundo,<br>
+      pero ya lo eres frente a mí, cada noche, en cada pensamiento.<br>
+      Espera un poco más, monito de mis días grises,<br>
+      que cuando esté bien, te lo pediré como mereces: para siempre.
+    </p>
+    <p>
+      Mientras tanto, toma este jardín que no se marchita,<br>
+      hecho de negro para lo que callo y de rosa para lo que siento.<br>
+      Y si una lágrima se te escapa leyendo esto,<br>
+      que sea porque, por fin, alguien te ama en voz alta.
+    </p>
+  </div>
+</section>
+
+<!-- ============ JARDÍN INTERACTIVO ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="letter-title">Un jardín que solo florece si lo tocas</div>
+  <div class="garden-intro">
+    <p>No hay botones aquí. Solo flores esperando tus manos.<br>Toca cada tulipán y déjalo florecer.</p>
+  </div>
+
+  <div class="garden" id="garden"></div>
+  <div class="garden-counter" id="counter">0 de 8 tulipanes han florecido</div>
+
+  <div id="message-stage">
+    <div class="message-placeholder" id="placeholderMsg">— aquí aparecerá cada flor que abras —</div>
+  </div>
+
+  <div id="final-reveal">
+    <div class="frame">
+      <h3>Cuando florecen todos...</h3>
+      <p>...esto es lo que querían decirte. Que te amo muchísimo. Que este jardín entero, negro y rosa, tulipán por tulipán, es solo una forma pequeña de mostrarte algo enorme. Que aunque hoy no te haya pedido ser mi novia, no es porque no quiera — es porque quiero cuidar mi salud primero, cuidarme para poder dártelo todo bien, completo, sin miedo. Tú ya lo sabes, lo hemos hablado, y sabes que cuando llegue el momento, la pedida será algo que no vas a olvidar jamás.</p>
+      <p class="signature">Con todo mi corazón — tu mono 🐒🩷</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEOS ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="media-title">Momentos tuyos</div>
+  <p style="text-align:center; font-size:0.85rem; color:rgba(246,236,241,0.4); margin-top:-14px; margin-bottom:0; font-style:italic;">
+    (los verás a un costado mientras lees — sin audio, sin distraerte de las palabras)
+  </p>
+</section>
+
+<div class="video-side" id="videoSide"></div>
+
+<audio id="bgAudio" loop autoplay playsinline style="display:none">
+  <source src="Jay Wheeler - Aiunii (Official Visualizer).mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============ CARTA FINAL ============ -->
+<section>
+  <div class="divider">✿</div>
+  <div class="letter-title">Antes de que te vayas...</div>
+  <div class="letter-body">
+    <p>Sé que aún no te he dicho las palabras exactas. Pero tú me llamas tu mono, y yo cada día pienso más en el día en que por fin pueda pedirte que seas mi novia como se merece — sin prisa, con salud, con todo bien hecho, para que sea algo que recuerdes toda tu vida.</p>
+    <p>A veces quisiera que el tiempo se adelantara solo, que llegara ya ese momento en el que no tenga que explicar nada, porque todo esté dicho, sentido y confirmado. Pero también sé que las cosas buenas, las que de verdad duran, no se apuran. Y tú vales toda la espera del mundo.</p>
+    <p>Mientras tanto, quédate con esto, con este jardín negro y rosa que hice solo para ti, con esta música que suena de fondo sin que tengas que pedirla, con estos recuerdos tuyos guardados a un costado, y con una sola verdad que no cambia ni cambiará: <em>te amo muchísimo.</em></p>
+    <p>Feliz día del maestro, mi futura mejor maestra del mundo. Hoy, mañana, y en todos los días en los que aún no me atrevo a decir tanto como debería.</p>
+  </div>
+</section>
+
+<footer>
+  hecho con un <span class="heart">♥</span> que apenas está aprendiendo a decir las cosas en voz alta
+</footer>
+
+<script>
+  // ---------- petals ----------
+  const petalLayer = document.getElementById('petal-layer');
+  const PETAL_COUNT = 26;
+  for(let i=0;i<PETAL_COUNT;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 10 + Math.random()*14;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.left = Math.random()*100+'vw';
+    p.style.setProperty('--drift', (Math.random()*160-80)+'px');
+    const dur = 9 + Math.random()*10;
+    p.style.animationDuration = dur+'s';
+    p.style.animationDelay = (-Math.random()*dur)+'s';
+    p.style.opacity = (0.4 + Math.random()*0.5).toFixed(2);
+    petalLayer.appendChild(p);
+  }
+
+  // ---------- tulip svg factory ----------
+  function tulipSVG(idx){
+    // alternate pink and near-black tulips
+    const dark = idx % 3 === 0;
+    const bodyColor = dark ? '#1c0f17' : '#d61f74';
+    const highlight = dark ? '#4a2338' : '#ff9dc4';
+    return `
+    <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 100 C40 85 42 60 50 40" fill="none" stroke="#3a8b5c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M50 78 C40 82 28 78 22 68" fill="none" stroke="#3a8b5c" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M50 88 C60 92 72 86 76 76" fill="none" stroke="#3a8b5c" stroke-width="3.5" stroke-linecap="round"/>
+      <g>
+        <path d="M50 10 C32 10 26 28 32 42 C38 54 50 60 50 60 C50 60 62 54 68 42 C74 28 68 10 50 10 Z" fill="${bodyColor}"/>
+        <path d="M50 10 C40 15 37 30 42 41 C45 48 50 52 50 52" fill="none" stroke="${highlight}" stroke-width="2" opacity="0.55"/>
+        <path d="M50 12 C46 24 46 38 50 48" fill="none" stroke="${highlight}" stroke-width="1.6" opacity="0.4"/>
+      </g>
+    </svg>`;
+  }
+
+  // ---------- hero field ----------
+  const fieldWrap = document.getElementById('fieldWrap');
+  for(let i=0;i<14;i++){
+    const div = document.createElement('div');
+    div.innerHTML = tulipSVG(i);
+    div.querySelector('svg').style.animationDelay = (-Math.random()*5)+'s';
+    fieldWrap.appendChild(div.firstElementChild);
+  }
+
+  // ---------- garden game ----------
+  const messages = [
+    "Hoy no te regalé solo flores... te regalé algo que nunca antes había dado: la primera vez que siento que esto vale la pena de verdad.",
+    "Sé que apenas empiezas este camino de ser maestra, pero yo ya sé la respuesta: vas a ser la mejor del mundo, monito.",
+    "Cada tulipán que ves aquí es un día que quiero seguir a tu lado, aunque todavía no te lo haya pedido con esas palabras.",
+    "Hay días en que pienso en todo lo que aún no te he dicho, y se me hace un nudo en la garganta. Ojalá pudieras leer directamente lo que siento, sin que las palabras se queden cortas.",
+    "No es que no quiera decirte que seas mi novia... es que quiero cuidarte primero, cuidar de mí, para dártelo todo bien hecho.",
+    "A veces me pregunto si tú sientes lo mismo cuando no estamos hablando. Si también piensas en mí en silencio, como yo pienso en ti cuando el día se pone lento y triste.",
+    "Tú ya lo sabes, y yo también: lo nuestro no es como cualquier cosa. Contigo todo se siente distinto, incluso lo simple.",
+    "No sé explicar por qué contigo todo pesa menos y a la vez se siente más profundo. Solo sé que no quiero que eso se apague nunca.",
+    "Cuando llegue el momento, la pedida será algo que no vas a olvidar jamás. Te lo prometo, aunque tenga que esperar para merecerlo.",
+    "Si alguna vez dudas de esto, vuelve a este jardín. Cada flor que abriste hoy es una prueba pequeña de algo que para mí es enorme.",
+    "Mientras tanto, quédate con esto: te amo muchísimo, más de lo que estas palabras alcanzan a decir, más de lo que yo mismo sé expresar en persona.",
+    "Feliz día del maestro, mi futura mejor maestra del mundo. Con todo mi corazón, hoy y todos los días que vengan — tu monito."
+  ];
+
+  const garden = document.getElementById('garden');
+  const counterEl = document.getElementById('counter');
+  const stage = document.getElementById('message-stage');
+  const placeholderMsg = document.getElementById('placeholderMsg');
+  const finalReveal = document.getElementById('final-reveal');
+  let bloomedCount = 0;
+
+  messages.forEach((msg, i) => {
+    const slot = document.createElement('div');
+    slot.className = 'tulip-slot';
+    slot.innerHTML = tulipSVG(i) + `<div class="tulip-num">${i+1}</div>`;
+    slot.addEventListener('click', () => {
+      if(slot.classList.contains('bloomed')) {
+        showMessage(msg);
+        return;
+      }
+      slot.classList.add('bloomed');
+      bloomedCount++;
+      counterEl.textContent = `${bloomedCount} de ${messages.length} tulipanes han florecido`;
+      showMessage(msg);
+      if(bloomedCount === messages.length){
+        setTimeout(()=> finalReveal.classList.add('show'), 500);
+      }
+    });
+    garden.appendChild(slot);
+  });
+
+  function showMessage(text){
+    if(placeholderMsg) placeholderMsg.remove();
+    stage.querySelectorAll('.message-card').forEach(c => c.remove());
+    const card = document.createElement('div');
+    card.className = 'message-card';
+    card.textContent = text;
+    stage.appendChild(card);
+  }
+
+  // ---------- video placeholders (side panel) ----------
+  // ---------- videos reales (panel lateral) ----------
+    const videoSide = document.getElementById('videoSide');
+    const videoFiles = ['video2.mp4', 'video3.mp4', 'video4.mp4', 'video5.mp4'];
+    videoFiles.forEach((filename) => {
+      const frame = document.createElement('div');
+      frame.className = 'video-frame';
+      frame.innerHTML = `<video src="${filename}" muted autoplay loop playsinline></video>`;
+      videoSide.appendChild(frame);
+    });
+
+  // ---------- audio (autoplay, oculto, en bucle) ----------
+  const audio = document.getElementById('bgAudio');
+
+  function attemptAutoplay(){
+    const p = audio.play();
+    if(p !== undefined){
+      p.catch(() => {
+        // el navegador bloqueó el autoplay con sonido: arrancamos
+        // en el primer toque/scroll que haga en la página.
+        const unlock = () => {
+          audio.play().catch(()=>{});
+          ['click','touchstart','scroll','keydown'].forEach(ev => document.removeEventListener(ev, unlock));
+        };
+        ['click','touchstart','scroll','keydown'].forEach(ev => document.addEventListener(ev, unlock, { once:true, passive:true }));
+      });
+    }
+  }
+  window.addEventListener('DOMContentLoaded', attemptAutoplay);
+  window.addEventListener('load', attemptAutoplay);
+  // por si el archivo termina y el atributo loop fallara en algún navegador
+  audio.addEventListener('ended', () => { audio.currentTime = 0; audio.play().catch(()=>{}); });
+</script>
+
+</body>
+</html>
